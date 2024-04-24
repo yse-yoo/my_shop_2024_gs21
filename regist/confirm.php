@@ -14,7 +14,7 @@ session_regenerate_id(true);
 $_SESSION['my_shop']['regist'] = $_POST;
 
 // POSTデータ取得
-$posts = $_POST;
+$posts = sanitize($_POST);
 // var_dump($posts);
 
 // バリデーション（データチェック）
@@ -24,6 +24,18 @@ if ($errors) {
     // 入力画面にリダイレクト
     header('Location: input.php');
     exit;
+}
+
+/**
+ * サニタイズ
+ */
+function sanitize($posts)
+{
+    if (empty($posts)) return;
+    foreach ($posts as $key => $value) {
+        $posts[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+    return $posts;
 }
 
 function validate(array $posts)
