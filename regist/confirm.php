@@ -24,7 +24,7 @@ $posts = $_POST;
 <body>
     <h2>Register</h2>
     <p>この内容で登録しますか？</p>
-    <form action="" method="post">
+    <form action="add.php" method="post">
         <div>
             <label for="">Name</label>
             <p><?= $posts['name'] ?></p>
