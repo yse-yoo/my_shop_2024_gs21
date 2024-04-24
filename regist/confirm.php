@@ -1,4 +1,10 @@
 <?php
+// セッションを開始
+session_start();
+
+// POSTデータをセッションに登録
+$_SESSION['my_shop']['regist'] = $_POST;
+
 // POSTデータ取得
 $posts = $_POST;
 // var_dump($posts);
