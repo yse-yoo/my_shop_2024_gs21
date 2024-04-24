@@ -47,8 +47,11 @@ function validate(array $posts)
     if (empty($posts['email'])) {
         $errors['email'] = 'Emailを入力してください';
     }
+    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,12}$/';
     if (empty($posts['password'])) {
         $errors['password'] = 'Passwordを入力してください';
+    } else if (!preg_match($pattern, $posts['password'])) {
+        $errors['password'] = 'Passwordは大文字、小文字を含む、6文字以上、12文字以内で入力してください。';
     }
     // エラーメッセージを返す
     return $errors;
