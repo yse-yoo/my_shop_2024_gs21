@@ -1,6 +1,8 @@
 <?php 
 // セッションを開始
 session_start();
+// セッションIDを再発行
+session_regenerate_id(true);
 
 // セッションがあれば取得
 if (!empty($_SESSION['my_shop']['regist'])) {

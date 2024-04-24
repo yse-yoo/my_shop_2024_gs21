@@ -1,6 +1,8 @@
 <?php
 // セッションを開始
 session_start();
+// セッションIDを再発行
+session_regenerate_id(true);
 
 // POSTデータをセッションに登録
 $_SESSION['my_shop']['regist'] = $_POST;
