@@ -40,6 +40,7 @@ unset($_SESSION['my_shop']['errors']);
             <div>
                 <label class="form-label" for="">Email</label>
                 <input class="form-control" type="email" name="email" value="<?= @$regist['email'] ?>">
+                <div class="text-danger mt-2 mb-2"><?= @$errors['email'] ?></div>
             <div>
                 <label class="form-label" for="">Password</label>
                 <input class="form-control" type="password" name="password">
