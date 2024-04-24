@@ -10,7 +10,6 @@ session_regenerate_id(true);
 if (!empty($_SESSION['my_shop']['regist'])) {
     $regist = $_SESSION['my_shop']['regist'];
 }
-var_dump($regist['password']);
 
 // パスワードのハッシュ化
 $regist['password'] = password_hash($regist['password'], PASSWORD_DEFAULT);
