@@ -20,6 +20,7 @@ $posts = $_POST;
 // バリデーション（データチェック）
 $errors = validate($posts);
 if ($errors) {
+    $_SESSION['my_shop']['errors'] = $errors;
     // 入力画面にリダイレクト
     header('Location: input.php');
     exit;
