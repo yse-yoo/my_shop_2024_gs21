@@ -8,5 +8,9 @@
 <body>
     <h2>Register Complete</h2>
     <p>ユーザ登録が完了しました。</p>
+
+    <div>
+        <a href="../">Top Page</a>
+    </div>
 </body>
 </html>
