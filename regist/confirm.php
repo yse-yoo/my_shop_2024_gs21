@@ -1,4 +1,10 @@
 <?php
+// POST以外はアクセスできない
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    //強制終了
+    exit;
+}
+
 // セッションを開始
 session_start();
 // セッションIDを再発行
@@ -10,6 +16,30 @@ $_SESSION['my_shop']['regist'] = $_POST;
 // POSTデータ取得
 $posts = $_POST;
 // var_dump($posts);
+
+// バリデーション（データチェック）
+$errors = validate($posts);
+if ($errors) {
+    // 入力画面にリダイレクト
+    header('Location: input.php');
+    exit;
+}
+
+function validate(array $posts)
+{
+    $errors = [];
+    if (empty($posts['name'])) {
+        $errors['name'] = 'Nameを入力してください';
+    }
+    if (empty($posts['email'])) {
+        $errors['email'] = 'Emailを入力してください';
+    }
+    if (empty($posts['password'])) {
+        $errors['password'] = 'Passwordを入力してください';
+    }
+    // エラーメッセージを返す
+    return $errors;
+}
 ?>
 
 <!DOCTYPE html>
