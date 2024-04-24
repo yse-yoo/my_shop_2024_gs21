@@ -27,6 +27,7 @@ $posts = $_POST;
         </div>
         <div>
             <button>Regist</button>
+            <a href="input.php">Back</a>
         </div>
     </form>
 </body>
