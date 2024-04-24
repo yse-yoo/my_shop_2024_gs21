@@ -1,3 +1,13 @@
+<?php 
+// セッションを開始
+session_start();
+
+// セッションがあれば取得
+if (!empty($_SESSION['my_shop']['regist'])) {
+    $regist = $_SESSION['my_shop']['regist'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +20,11 @@
     <form action="confirm.php" method="post">
         <div>
             <label for="">Name</label>
-            <input type="text" name="name">
+            <input type="text" name="name" value="<?= @$regist['name'] ?>">
         </div>
         <div>
             <label for="">Email</label>
-            <input type="text" name="email">
+            <input type="text" name="email" value="<?= @$regist['email'] ?>">
         </div>
         <div>
             <label for="">Password</label>
