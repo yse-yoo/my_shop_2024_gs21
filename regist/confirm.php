@@ -1,3 +1,8 @@
+<?php 
+$posts = $_POST;
+var_dump($posts);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
