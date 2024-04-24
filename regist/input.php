@@ -20,6 +20,9 @@
             <label for="">Password</label>
             <input type="password" name="password">
         </div>
+        <div>
+            <button>Next</button>
+        </div>
     </form>
 </body>
 </html>
