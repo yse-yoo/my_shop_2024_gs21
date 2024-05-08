@@ -12,5 +12,5 @@ $item = $_POST;
 $stmt = $pdo->prepare($sql);
 $stmt->execute($item);
 
-// 完了画面にリダイレクトする
+// 一覧画面にリダイレクトする
 header('Location: ./');
