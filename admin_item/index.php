@@ -1,3 +1,9 @@
+<?php
+//TODO: DB接続
+//TODO: itemsテーブルからデータ一覧取得
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -20,6 +26,7 @@
                 <th>在庫数</th>
                 <th>更新⽇</th>
             </tr>
+            <!-- TODO: データ繰り返し表示 -->
         </table>
     </div>
 </body>
