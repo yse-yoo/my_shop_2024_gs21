@@ -54,6 +54,14 @@ $item = $stmt->fetch(PDO::FETCH_ASSOC);
             <button class="btn btn-primary">更新</button>
             <a class="btn btn-outline-primary" href="./">戻る</a>
         </form>
+
+        <div class="mt-4">
+            <form action="delete.php" method="post">
+                <!-- 削除する商品IDを送信(hidden) -->
+                <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                <button class="btn btn-danger">削除</button>
+            </form>
+        </div>
     </div>
 </body>
 
