@@ -11,6 +11,7 @@ $sql = "SELECT * FROM items WHERE id = {$item_id};";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
+// データ取得
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
