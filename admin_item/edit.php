@@ -1,3 +1,19 @@
+<?php
+// データベースに接続
+require_once '../db.php';
+
+$item_id = $_GET['id'];
+
+// 商品データを指定したidで取得SQL
+$sql = "SELECT * FROM items WHERE id = {$item_id};";
+
+// SQLを実行
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+
+$item = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
