@@ -29,6 +29,8 @@ $item = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="container">
         <h2 class="h2">商品編集</h2>
         <form action="update.php" method="post">
+            <input type="hidden" name="id" value="<?= $item['id'] ?>">
+
             <div class="mb-3 form-floating">
                 <input id="code" type="text" class="form-control" name="code" value="<?= @$item['code'] ?>">
                 <label for="code">商品コード</label>
