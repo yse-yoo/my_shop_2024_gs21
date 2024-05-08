@@ -5,8 +5,7 @@ require_once '../db.php';
 // POSTデータ取得
 $item = $_POST;
 
-// TODO: 商品コード重複チェック
-// TODO: 商品コードで検索
+// 商品コード重複チェック
 $sql = "SELECT * FROM items WHERE code = :code";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['code' => $item['code']]);
