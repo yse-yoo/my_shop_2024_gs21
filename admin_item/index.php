@@ -1,7 +1,15 @@
 <?php
-//TODO: DB接続
-//TODO: itemsテーブルからデータ一覧取得
+// データベースに接続
+require_once '../db.php';
 
+// itemsテーブルからレコードを取得
+$sql = "SELECT * FROM items;";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $items[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,15 +26,28 @@
     <div class="container">
         <h2 class="h2">商品⼀覧</h2>
         <table class="table">
-            <tr>
-                <th><a class="btn btn-outline-primary" href="input.php">新規</a></th>
-                <th>コード</th>
-                <th>商品名</th>
-                <th>価格</th>
-                <th>在庫数</th>
-                <th>更新⽇</th>
-            </tr>
-            <!-- TODO: データ繰り返し表示 -->
+            <thead>
+                <tr>
+                    <th><a class="btn btn-outline-primary" href="input.php">新規</a></th>
+                    <th>コード</th>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>在庫数</th>
+                    <th>更新⽇</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($items as $item): ?>
+                <tr>
+                    <th><a class="btn btn-outline-primary" href="edit.php">Edit</a></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
         </table>
     </div>
 </body>
