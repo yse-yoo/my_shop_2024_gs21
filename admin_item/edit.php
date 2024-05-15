@@ -2,6 +2,7 @@
 // データベースに接続
 require_once '../db.php';
 
+// 商品IDを取得
 $item_id = $_GET['id'];
 
 // 商品データを指定したidで取得SQL
