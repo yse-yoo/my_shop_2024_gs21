@@ -1,3 +1,29 @@
+<?php
+// セッション開始
+session_start();
+session_regenerate_id(true);
+
+// DB接続
+require_once '../db.php';
+
+// 商品IDを取得
+$item_id = $_GET['item_id'];
+
+// items.id で検索して商品を取得
+$sql = "SELECT * FROM items WHERE id = {$item_id};";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+
+$item = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$cart_items = [];
+if ($item) {
+    // セッションにカート情報を登録する
+    $_SESSION['my_shop']['cart'][$item['id']] = $item;
+    $cart_items = $_SESSION['my_shop']['cart'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,14 +40,18 @@
         <h2 class="p-2 text-center">ショッピングカート</h2>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">商品1</h5>
-                        <p class="card-text text-danger">&yen;500</p>
+            <?php if ($cart_items) : ?>
+                <?php foreach ($cart_items as $cart_item) : ?>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $cart_item['name'] ?></h5>
+                                <p class="card-text text-danger">&yen;<?= $cart_item['price'] ?></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                <?php endforeach ?>
+            <?php endif ?>
         </div>
     </main>
 </body>
