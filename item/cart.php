@@ -47,6 +47,9 @@ if ($item) {
                             <div class="card-body">
                                 <h5 class="card-title"><?= $cart_item['name'] ?></h5>
                                 <p class="card-text text-danger">&yen;<?= $cart_item['price'] ?></p>
+                                <div>
+                                    <a href="delete.php?item_id=<?= $cart_item['id'] ?>">削除</a>
+                                </div>
                             </div>
                         </div>
                     </div>
