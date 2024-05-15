@@ -6,20 +6,25 @@ session_regenerate_id(true);
 // DB接続
 require_once '../db.php';
 
-// 商品IDを取得
-$item_id = $_GET['item_id'];
+if (isset($_GET['item_id'])) {
+    // 商品IDを取得
+    $item_id = $_GET['item_id'];
 
-// items.id で検索して商品を取得
-$sql = "SELECT * FROM items WHERE id = {$item_id};";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
+    // items.id で検索して商品を取得
+    $sql = "SELECT * FROM items WHERE id = {$item_id};";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 
-$item = $stmt->fetch(PDO::FETCH_ASSOC);
+    $item = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($item) {
+        // セッションにカート情報を登録する
+        $_SESSION['my_shop']['cart'][$item['id']] = $item;
+    }
+}
 
 $cart_items = [];
-if ($item) {
-    // セッションにカート情報を登録する
-    $_SESSION['my_shop']['cart'][$item['id']] = $item;
+if (isset($_SESSION['my_shop']['cart'])) {
     $cart_items = $_SESSION['my_shop']['cart'];
 }
 ?>
@@ -39,6 +44,7 @@ if ($item) {
     <main class="container">
         <h2 class="p-2 text-center">ショッピングカート</h2>
 
+        <a href="./">商品一覧へ</a>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <?php if ($cart_items) : ?>
                 <?php foreach ($cart_items as $cart_item) : ?>
