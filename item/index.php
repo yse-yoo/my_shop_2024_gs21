@@ -7,6 +7,7 @@ $sql = "SELECT * FROM items;";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
+$items = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $items[] = $row;
 }
