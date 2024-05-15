@@ -4,6 +4,11 @@ session_regenerate_id(true);
 
 // セッションからユーザ情報取得
 $user = $_SESSION['my_shop']['user'];
+
+// もしユーザ情報がなければ、ログインページにリダイレクト
+if (!$user) {
+    header('Location: ../login/');
+}
 ?>
 
 <!DOCTYPE html>
