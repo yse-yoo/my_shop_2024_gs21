@@ -28,17 +28,19 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         <h2 class="p-2 text-center">商品一覧</h2>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <?php foreach ($items as $item): ?>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $item['name'] ?></h5>
-                        <p class="card-text text-danger">\<?= $item['price'] ?></p>
-                        <a href="#" class="btn btn-primary">カートに入れる</a>
+            <?php if ($items) : ?>
+                <?php foreach ($items as $item) : ?>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $item['name'] ?></h5>
+                                <p class="card-text text-danger">\<?= $item['price'] ?></p>
+                                <a href="#" class="btn btn-primary">カートに入れる</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <?php endforeach ?>
+                <?php endforeach ?>
+            <?php endif ?>
         </div>
     </main>
 </body>
