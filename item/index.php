@@ -36,7 +36,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             <div class="card-body">
                                 <h5 class="card-title"><?= $item['name'] ?></h5>
                                 <p class="card-text text-danger">&yen;<?= $item['price'] ?></p>
-                                <a href="#" class="btn btn-primary">カートに入れる</a>
+                                <a href="cart.php?item_id=<?= $item['id'] ?>" class="btn btn-primary">カートに入れる</a>
                             </div>
                         </div>
                     </div>
