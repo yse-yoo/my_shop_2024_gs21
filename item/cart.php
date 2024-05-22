@@ -47,7 +47,14 @@ $amount_list = range(1, 10);
     <main class="container">
         <h2 class="p-2 text-center">ショッピングカート</h2>
 
-        <a href="./">商品一覧へ</a>
+        <div class="p-3">
+            <a href="./">商品一覧</a>
+            |
+            <a href="cart.php">カート</a>
+            |
+            <a href="../user/">ユーザホーム</a>
+        </div>
+        
         <?php if ($cart_items): ?>
         <form action="purchase.php" method="post">
             <div class="row row-cols-1 row-cols-md-3 g-4">

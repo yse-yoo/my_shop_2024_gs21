@@ -23,10 +23,14 @@ if (!$user) {
 
 <body>
     <div class="container">
-        <nav>
+        <div class="p-3">
+            <a href="../item/">商品一覧</a>
+            |
             <a href="../item/cart.php">カート</a>
+            |
+            <a href="../user/">ユーザホーム</a>
             <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
-        </nav>
+        </div>
         <p><?= $user['name'] ?> さん</p>
     </div>
 </body>
