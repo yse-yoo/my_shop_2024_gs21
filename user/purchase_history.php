@@ -39,12 +39,18 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 //     $items[]= $stmt->fetch(PDO::FETCH_ASSOC);
 // }
 
+$result['total_price'] = calculateTotalPrice($pdo, $user);
+
 // 購入金額の合計をだすSQL
-$sql = "SELECT SUM(total_price) AS total_price FROM user_items 
+function calculateTotalPrice($pdo, $user)
+{
+    $sql = "SELECT SUM(total_price) AS total_price FROM user_items 
         WHERE user_id = {$user['id']}";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['total_price'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -81,12 +87,12 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($user_items as $item): ?>
-                <tr>
-                    <td><?= $item['name'] ?></td>
-                    <td><?= $item['amount'] ?></td>
-                    <td><?= $item['total_price'] ?></td>
-                </tr>
+                <?php foreach ($user_items as $item) : ?>
+                    <tr>
+                        <td><?= $item['name'] ?></td>
+                        <td><?= $item['amount'] ?></td>
+                        <td><?= $item['total_price'] ?></td>
+                    </tr>
                 <?php endforeach ?>
             </tbody>
         </table>
