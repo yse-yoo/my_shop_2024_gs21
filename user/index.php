@@ -13,6 +13,7 @@ if (!$user) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,8 +23,12 @@ if (!$user) {
 
 <body>
     <div class="container">
+        <nav>
+            <a href="../item/cart.php">カート</a>
+            <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
+        </nav>
         <p><?= $user['name'] ?> さん</p>
-        <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
     </div>
 </body>
+
 </html>
