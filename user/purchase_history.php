@@ -33,7 +33,7 @@ if (!$user) {
             <a href="purchase_history.php">購入履歴</a>
             <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
         </div>
-        <p><?= $user['name'] ?> さん</p>
+        <h2>購入履歴</h2>
     </div>
 </body>
 
