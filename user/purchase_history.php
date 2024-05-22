@@ -1,4 +1,7 @@
 <?php
+// データベースに接続
+require_once '../db.php';
+
 session_start();
 session_regenerate_id(true);
 
@@ -8,6 +11,16 @@ $user = $_SESSION['my_shop']['user'];
 // もしユーザ情報がなければ、ログインページにリダイレクト
 if (!$user) {
     header('Location: ../login/');
+}
+
+// 購入履歴 user_items をすべて取得するSQL
+$sql = "SELECT * FROM user_items WHERE user_id = {$user['id']};";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+
+$items = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $items[] = $row;
 }
 ?>
 
@@ -34,6 +47,22 @@ if (!$user) {
             <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
         </div>
         <h2>購入履歴</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>価格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($items as $item): ?>
+                <tr>
+                    <td><?= $item['name'] ?></td>
+                    <td><?= $item['price'] ?></td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
     </div>
 </body>
 
