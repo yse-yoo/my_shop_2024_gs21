@@ -14,7 +14,13 @@ if (!$user) {
 }
 
 // 購入履歴 user_items をすべて取得するSQL
-$sql = "SELECT * FROM user_items WHERE user_id = {$user['id']};";
+$sql = "SELECT 
+            items.id,
+            items.name,
+            items.price
+        FROM user_items 
+        JOIN items ON items.id = user_items.item_id
+        WHERE user_id = {$user['id']};";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
@@ -24,12 +30,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 
 // ダメなプログラム N+1問題
-foreach ($user_items as $user_item) {
-    $sql = "SELECT * FROM items WHERE id = {$user_item['item_id']};";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $items[]= $stmt->fetch(PDO::FETCH_ASSOC);
-}
+// foreach ($user_items as $user_item) {
+//     $sql = "SELECT * FROM items WHERE id = {$user_item['item_id']};";
+//     $stmt = $pdo->prepare($sql);
+//     $stmt->execute();
+//     $items[]= $stmt->fetch(PDO::FETCH_ASSOC);
+// }
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +69,7 @@ foreach ($user_items as $user_item) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($items as $item): ?>
+                <?php foreach ($user_items as $item): ?>
                 <tr>
                     <td><?= $item['name'] ?></td>
                     <td><?= $item['price'] ?></td>
