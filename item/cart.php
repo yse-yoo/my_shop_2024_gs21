@@ -15,6 +15,7 @@ if (isset($_GET['item_id'])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
+    //データを１つとる
     $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($item) {
@@ -27,6 +28,7 @@ $cart_items = [];
 if (isset($_SESSION['my_shop']['cart'])) {
     $cart_items = $_SESSION['my_shop']['cart'];
 }
+// var_dump($_SESSION['my_shop']['cart']);
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +63,15 @@ if (isset($_SESSION['my_shop']['cart'])) {
                     </div>
                 <?php endforeach ?>
             <?php endif ?>
+        </div>
+
+        <div class="mt-4">
+            <p>
+                商品を購入しますか？
+            </p>
+            <form action="" method="post">
+                <button class="btn btn-primary">購入</button>
+            </form>
         </div>
     </main>
 </body>
