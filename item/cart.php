@@ -48,42 +48,39 @@ $amount_list = range(1, 10);
         <h2 class="p-2 text-center">ショッピングカート</h2>
 
         <a href="./">商品一覧へ</a>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <?php if ($cart_items) : ?>
-                <?php foreach ($cart_items as $cart_item) : ?>
-                    <div class="col">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $cart_item['name'] ?></h5>
-                                <p class="card-text text-danger">&yen;<?= $cart_item['price'] ?></p>
-                                <div class="d-flex">
-                                    <a href="delete.php?item_id=<?= $cart_item['id'] ?>">削除</a>
-                                    <div class="ms-3">
-                                        <form action="" method="get">
-                                            <select name="amount">
-                                                <option value="">-- 個数 --</option>
-                                                <?php foreach ($amount_list as $amount):  ?>
-                                                <option value="<?= $amount ?>"><?= $amount ?></option>
+        <form action="purchase.php" method="post">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <?php if ($cart_items) : ?>
+                    <?php foreach ($cart_items as $cart_item) : ?>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= $cart_item['name'] ?></h5>
+                                    <p class="card-text text-danger">&yen;<?= $cart_item['price'] ?></p>
+                                    <div class="d-flex">
+                                        <a href="delete.php?item_id=<?= $cart_item['id'] ?>">削除</a>
+                                        <div class="ms-3">
+                                            <select name="amount[]">
+                                                <?php foreach ($amount_list as $amount) :  ?>
+                                                    <option value="<?= $amount ?>"><?= $amount ?></option>
                                                 <?php endforeach  ?>
                                             </select>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach ?>
-            <?php endif ?>
-        </div>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </div>
 
-        <div class="mt-4">
-            <p>
-                商品を購入しますか？
-            </p>
-            <form action="purchase.php" method="post">
+            <div class="mt-4">
+                <p>
+                    商品を購入しますか？
+                </p>
                 <button class="btn btn-primary">購入</button>
-            </form>
-        </div>
+            </div>
+        </form>
     </main>
 </body>
 
