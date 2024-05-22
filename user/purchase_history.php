@@ -17,7 +17,9 @@ if (!$user) {
 $sql = "SELECT 
             items.id,
             items.name,
-            items.price
+            items.price,
+            user_items.amount,
+            user_items.total_price
         FROM user_items 
         JOIN items ON items.id = user_items.item_id
         WHERE user_id = {$user['id']};";
@@ -65,14 +67,16 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             <thead>
                 <tr>
                     <th>商品名</th>
-                    <th>価格</th>
+                    <th>個数</th>
+                    <th>購入金額</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($user_items as $item): ?>
                 <tr>
                     <td><?= $item['name'] ?></td>
-                    <td><?= $item['price'] ?></td>
+                    <td><?= $item['amount'] ?></td>
+                    <td><?= $item['total_price'] ?></td>
                 </tr>
                 <?php endforeach ?>
             </tbody>
