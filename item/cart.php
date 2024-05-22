@@ -48,6 +48,7 @@ $amount_list = range(1, 10);
         <h2 class="p-2 text-center">ショッピングカート</h2>
 
         <a href="./">商品一覧へ</a>
+        <?php if ($cart_items): ?>
         <form action="purchase.php" method="post">
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <?php if ($cart_items) : ?>
@@ -81,6 +82,9 @@ $amount_list = range(1, 10);
                 <button class="btn btn-primary">購入</button>
             </div>
         </form>
+        <?php else: ?>
+            <p>カートに商品がありません。</p>
+        <?php endif ?>
     </main>
 </body>
 
