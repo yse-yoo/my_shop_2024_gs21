@@ -38,6 +38,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 //     $stmt->execute();
 //     $items[]= $stmt->fetch(PDO::FETCH_ASSOC);
 // }
+
+// 購入金額の合計をだすSQL
+$sql = "SELECT SUM(total_price) AS total_price FROM user_items 
+        WHERE user_id = {$user['id']}";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +70,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
         </div>
         <h2>購入履歴</h2>
+        <h3>合計金額</h3>
+        <p>&yen;<?= number_format($result['total_price']) ?></p>
         <table class="table">
             <thead>
                 <tr>
