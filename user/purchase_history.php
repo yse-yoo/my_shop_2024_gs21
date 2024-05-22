@@ -18,9 +18,17 @@ $sql = "SELECT * FROM user_items WHERE user_id = {$user['id']};";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
-$items = [];
+$user_items = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $items[] = $row;
+    $user_items[] = $row;
+}
+
+// ダメなプログラム N+1問題
+foreach ($user_items as $user_item) {
+    $sql = "SELECT * FROM items WHERE id = {$user_item['item_id']};";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $items[]= $stmt->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 
