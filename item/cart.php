@@ -69,7 +69,7 @@ if (isset($_SESSION['my_shop']['cart'])) {
             <p>
                 商品を購入しますか？
             </p>
-            <form action="" method="post">
+            <form action="purchase.php" method="post">
                 <button class="btn btn-primary">購入</button>
             </form>
         </div>
