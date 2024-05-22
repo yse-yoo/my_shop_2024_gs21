@@ -1,3 +1,11 @@
+<?php
+session_start();
+session_regenerate_id(true);
+
+if (isset($_SESSION['my_shop']['cart'])) {
+    unset($_SESSION['my_shop']['cart']);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
