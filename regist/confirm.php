@@ -16,6 +16,7 @@ $_SESSION['my_shop']['regist'] = $_POST;
 
 // POSTデータ取得
 $posts = sanitize($_POST);
+//$posts = $_POST;
 // var_dump($posts);
 
 // バリデーション（データチェック）

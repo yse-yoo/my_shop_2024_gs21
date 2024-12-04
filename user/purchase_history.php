@@ -1,55 +1,48 @@
 <?php
-// データベースに接続
 require_once '../db.php';
 
+// セッション開始
 session_start();
 session_regenerate_id(true);
 
-// セッションからユーザ情報取得
-$user = $_SESSION['my_shop']['user'];
+// ユーザ取得
+$user = loadUser();
 
-// もしユーザ情報がなければ、ログインページにリダイレクト
 if (!$user) {
     header('Location: ../login/');
+    exit;
 }
 
-// 購入履歴 user_items をすべて取得するSQL
+// DB接続
+// itemsテーブルからレコードを取得
 $sql = "SELECT 
-            items.id,
-            items.name,
-            items.price,
-            user_items.amount,
-            user_items.total_price
+               user_items.user_id, 
+               user_items.item_id, 
+               user_items.amount, 
+               user_items.total_price, 
+               user_items.created_at, 
+               items.code,
+               items.name,
+               items.price
         FROM user_items 
-        JOIN items ON items.id = user_items.item_id
-        WHERE user_id = {$user['id']};";
+    JOIN items
+    ON user_items.item_id = items.id
+    WHERE user_items.user_id = :user_id
+    ORDER BY user_items.created_at DESC;";
+
 $stmt = $pdo->prepare($sql);
-$stmt->execute();
+$stmt->execute(['user_id' => $user['id']]);
 
 $user_items = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $user_items[] = $row;
 }
 
-// ダメなプログラム N+1問題
-// foreach ($user_items as $user_item) {
-//     $sql = "SELECT * FROM items WHERE id = {$user_item['item_id']};";
-//     $stmt = $pdo->prepare($sql);
-//     $stmt->execute();
-//     $items[]= $stmt->fetch(PDO::FETCH_ASSOC);
-// }
-
-$result['total_price'] = calculateTotalPrice($pdo, $user);
-
-// 購入金額の合計をだすSQL
-function calculateTotalPrice($pdo, $user)
+function loadUser()
 {
-    $sql = "SELECT SUM(total_price) AS total_price FROM user_items 
-        WHERE user_id = {$user['id']}";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result['total_price'];
+    if (!empty($_SESSION['my_shop']['user'])) {
+        return $_SESSION['my_shop']['user'];
+    }
 }
 ?>
 
@@ -59,44 +52,46 @@ function calculateTotalPrice($pdo, $user)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Shop</title>
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
+
 <body>
-    <div class="container">
-        <div class="p-3">
-            <a href="../item/">商品一覧</a>
+    <main class="container">
+        <h2 class="p-2 text-center">購入履歴</h2>
+
+        <nav class="mb-3">
+            <a class="" href="../item/cart.php">ショッピングカート</a>
             |
-            <a href="../item/cart.php">カート</a>
+            <a class="" href="purchase_history.php">購入履歴</a>
             |
-            <a href="./">ユーザホーム</a>
-            |
-            <a href="purchase_history.php">購入履歴</a>
-            <a class="btn btn-sm btn-outline-primary" href="logout.php">Sign out</a>
-        </div>
-        <h2>購入履歴</h2>
-        <h3>合計金額</h3>
-        <p>&yen;<?= number_format($result['total_price']) ?></p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>商品名</th>
-                    <th>個数</th>
-                    <th>購入金額</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($user_items as $item) : ?>
-                    <tr>
-                        <td><?= $item['name'] ?></td>
-                        <td><?= $item['amount'] ?></td>
-                        <td><?= $item['total_price'] ?></td>
-                    </tr>
+            <a class="" href="logout.php">ログアウト</a>
+        </nav>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php if ($user_items) : ?>
+                <?php foreach ($user_items as $user_item) : ?>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <p class="card-text text-mute"><?= $user_item['created_at'] ?></p>
+                                <h5 class="card-title"><?= $user_item['name'] ?></h5>
+                                <p class="card-text">
+                                    <span>&yen;<?= $user_item['price'] ?></span>
+                                    <span><?= $user_item['amount'] ?>個</span>
+                                </p>
+                                <p class="card-text">
+                                    <span class="fw-bold">小計</span>
+                                    <span>&yen;<?= $user_item['total_price'] ?></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach ?>
-            </tbody>
-        </table>
-    </div>
+            <?php endif ?>
+        </div>
+    </main>
 </body>
 
 </html>
